@@ -1,6 +1,6 @@
 {
   "name": "@evex/gitty-api-js",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Gitty API Client on JavScript",
   "tasks": {
     "dev": "deno run --watch main.ts"

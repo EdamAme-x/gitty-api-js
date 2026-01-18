@@ -40,6 +40,22 @@ type ClientProxy = ClientProxyCall & {
 
 const API_URL = "https://gitty-code.com";
 
+
+/**
+ * Create a client for Gitty API
+ * @param {string | undefined} defaultCookies Cookies to use for all requests
+ * @param {Fetcher} fetcher Fetcher to use for requests. Default is `fetch`
+ * @returns {Client} Client which can be used to call Gitty API operations
+ * @example
+ * const client = createClient("sb-<github-id>-auth-token.<token>");
+ * const response = await client.user.getUserScoreAndRepo({
+ *   "json": {
+ *     "githubId": "EdamAme-x",
+ *   },
+ * }, "POST");
+ * const data = await response.json();
+ * console.log(data);
+ */
 export const createClient = (
   defaultCookies: string | undefined,
   fetcher: Fetcher = fetch,
