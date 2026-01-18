@@ -1,4 +1,4 @@
-import { createClient } from "../trpc/create-client.ts";
+import { createClient } from "@/trpc/create-client.ts";
 import { assertEquals, assertExists } from "@std/assert";
 import "@std/dotenv/load";
 
@@ -10,7 +10,7 @@ if (!cookies) {
 
 Deno.test("Integration tests", async () => {
   const client = createClient(fetch, cookies);
-  const result = await client("user.getUserScoreAndRepo", cookies, {
+  const result = await client.user.getUserScoreAndRepo({
     "json": {
       "githubId": "EdamAme-x",
     },

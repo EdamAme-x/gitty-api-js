@@ -15,17 +15,40 @@ export interface Input {
 
 export type OperationPath = `${string}.${string}`;
 
+type Method = "GET" | "POST";
+
+type ClientCall = (
+  operationPath: OperationPath,
+  input: Input,
+  method?: Method,
+  cookies?: string,
+) => Promise<Response>;
+
+type ClientProxyCall = (
+  input: Input,
+  method?: Method,
+  cookies?: string,
+) => Promise<Response>;
+
+export type Client = ClientCall & {
+  [key: string]: ClientProxy;
+};
+
+type ClientProxy = ClientProxyCall & {
+  [key: string]: ClientProxy;
+};
+
 const API_URL = "https://gitty-code.com";
 
 export const createClient = (
   fetcher: Fetcher = fetch,
   defaultCookies: string | undefined,
-) => {
-  return (
+) : Client => {
+  const execute = (
     operationPath: OperationPath,
-    cookies: string | undefined = defaultCookies,
     input: Input,
-    method: "GET" | "POST" = "GET",
+    method: Method = "GET",
+    cookies: string | undefined = defaultCookies,
   ) => {
     const [group, op] = operationPath.split(".");
 
@@ -77,4 +100,40 @@ export const createClient = (
 
     return fetcher(requestUrl, requestInit);
   };
+
+  const createProxy = (parts: string[] = []): ClientProxy => {
+    const target = (() => {}) as unknown as ClientProxy;
+    return new Proxy(target, {
+      get: (_target, prop) => {
+        if (prop === "then" || typeof prop === "symbol") {
+          return undefined;
+        }
+        return createProxy([...parts, String(prop)]);
+      },
+      apply: (_target, _thisArg, args) => {
+        if (parts.length === 0) {
+          const [
+            operationPath,
+            input,
+            method = "GET",
+            cookies = defaultCookies,
+          ] = args as [
+            OperationPath,
+            Input,
+            Method | undefined,
+            string | undefined,
+          ];
+          return execute(operationPath, input, method, cookies);
+        }
+        const [input, method = "GET", cookies = defaultCookies] = args as [
+          Input,
+          Method | undefined,
+          string | undefined,
+        ];
+        return execute(parts.join(".") as OperationPath, input, method, cookies);
+      },
+    });
+  };
+
+  return createProxy() as unknown as Client;
 };
