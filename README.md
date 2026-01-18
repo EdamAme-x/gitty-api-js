@@ -1,5 +1,5 @@
 # gitty-api-js
-Gitty API Client for JavScript
+Gitty API Client for JavaScript
 
 ## Installation
 ```llvm
