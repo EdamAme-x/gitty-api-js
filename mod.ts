@@ -3,3 +3,4 @@
  * @module gitty-api-js
  */
 
+export * from "./trpc/create-client.ts";
