@@ -25,6 +25,6 @@ const data = await response.json();
 console.log(data);
 ```
 
-From here, I can confirm the operation name and input.
+From here, you can see the operation name and input.
 
 <img width="224" height="250" alt="image" src="https://github.com/user-attachments/assets/aefc0e21-197b-4c9f-8d28-0a5bd2b1198c" />
