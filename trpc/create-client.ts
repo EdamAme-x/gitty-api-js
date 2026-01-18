@@ -1,13 +1,13 @@
 import type { LooseType } from "@evex/loose-types";
 
-// Type definition for the fetcher function
+/** Type definition for the fetcher function */
 export interface Fetcher {
   (url: string, options: RequestInit): Promise<Response>;
 }
 
 type JsonablePropertyKey = Exclude<PropertyKey, symbol>;
 
-// Type definition for the input object
+/** Type definition for the input object */
 export interface Input {
   json: Record<JsonablePropertyKey, LooseType> | null;
   meta?: {
@@ -15,7 +15,7 @@ export interface Input {
   };
 }
 
-// Type definition for the operation path
+/** Type definition for the operation path */
 export type OperationPath = `${string}.${string}`;
 
 type Method = "GET" | "POST";
@@ -33,7 +33,7 @@ type ClientProxyCall = (
   cookies?: string,
 ) => Promise<Response>;
 
-// Type definition for the client
+/** Type definition for the client */
 export type Client = ClientCall & {
   [key: string]: ClientProxy;
 };
