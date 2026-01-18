@@ -9,7 +9,7 @@ if (!cookies) {
 }
 
 Deno.test("Integration tests", async () => {
-  const client = createClient(fetch, cookies);
+  const client = createClient(cookies);
   const result = await client.user.getUserScoreAndRepo({
     "json": {
       "githubId": "EdamAme-x",

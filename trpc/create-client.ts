@@ -41,8 +41,8 @@ type ClientProxy = ClientProxyCall & {
 const API_URL = "https://gitty-code.com";
 
 export const createClient = (
-  fetcher: Fetcher = fetch,
   defaultCookies: string | undefined,
+  fetcher: Fetcher = fetch,
 ) : Client => {
   const execute = (
     operationPath: OperationPath,

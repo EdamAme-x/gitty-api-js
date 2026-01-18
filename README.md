@@ -14,7 +14,7 @@ You need to extract cookies. (/`sb-[a-z]+-auth-token\.[\d]/` is important.)
 import { createClient } from "@evex/gitty-api-js";
 
 const cookies = "sb-xxxxxxxx-auth-token.0=...; sb-xxxxxxxx-auth-token.1=...; ...";
-const client = createClient(fetch, cookies);
+const client = createClient(cookies);
 
 const response = await client.user.getUserScoreAndRepo({
     "json": {
